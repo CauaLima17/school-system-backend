@@ -8,6 +8,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Representa a tabela de usuários que inclui:
+ * Admins, Professores e Alunos.
+ *
+ * @author Cauã
+ */
 @Entity
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
