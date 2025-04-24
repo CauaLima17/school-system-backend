@@ -3,7 +3,7 @@ package com.github.caua.sistema_escolar.model.usuarios;
 import com.github.caua.sistema_escolar.model.Materia;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +18,6 @@ import java.util.List;
 @DiscriminatorValue("Professor")
 @SuperBuilder
 public class Professor extends Usuario {
-    @OneToMany(mappedBy = "professor")
+    @ManyToMany(mappedBy = "professor")
     private List<Materia> materias;
 }

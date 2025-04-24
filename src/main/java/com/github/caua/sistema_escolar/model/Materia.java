@@ -1,12 +1,13 @@
 package com.github.caua.sistema_escolar.model;
 
 import com.github.caua.sistema_escolar.model.usuarios.Professor;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -15,7 +16,12 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Materia extends Entidade {
     private String nome;
-    @ManyToOne
-    private Professor professor;
+    @ManyToMany
+    @JoinTable(
+            name = "materia_professores",
+            joinColumns = @JoinColumn(name = "materia_id"),
+            inverseJoinColumns = @JoinColumn(name = "professor_id")
+    )
+    private List<Professor> professor;
     private Integer cargaHoraria;
 }

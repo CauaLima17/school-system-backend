@@ -29,6 +29,7 @@ import java.util.List;
 @Data
 @SuperBuilder
 public class Usuario extends Entidade {
+    @Column(nullable = false)
     private String nome;
     @Column(unique = true, nullable = false)
     private String email;
