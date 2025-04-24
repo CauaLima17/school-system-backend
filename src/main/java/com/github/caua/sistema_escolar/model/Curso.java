@@ -15,6 +15,7 @@ import java.util.List;
 @Builder
 public class Curso extends Entidade {
     private String nome;
+    private String turno;
     private Long cargaHoraria;
     @ManyToMany
     @JoinTable(

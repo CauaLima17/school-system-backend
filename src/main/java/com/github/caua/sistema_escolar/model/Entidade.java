@@ -1,10 +1,8 @@
 package com.github.caua.sistema_escolar.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -24,4 +22,9 @@ public abstract class Entidade implements Serializable {
     private LocalDateTime data_criacao;
     private LocalDateTime data_atualizacao;
     private LocalDateTime data_delete;
+
+    @PrePersist
+    public void prePersist() {
+        data_criacao = LocalDateTime.now();
+    }
 }
