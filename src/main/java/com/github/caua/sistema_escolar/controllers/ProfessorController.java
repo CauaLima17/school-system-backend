@@ -19,9 +19,6 @@ public class ProfessorController {
         this.professorService = professorService;
     }
 
-    @Autowired
-
-
     @GetMapping("/listar")
     public ResponseEntity<List<ProfessorDTO>> listar() {
         return ResponseEntity.ok(professorService.listarProfessores());

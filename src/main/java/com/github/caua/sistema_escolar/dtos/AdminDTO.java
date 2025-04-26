@@ -2,10 +2,12 @@ package com.github.caua.sistema_escolar.dtos;
 
 import com.github.caua.sistema_escolar.model.usuarios.Admin;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
+@NoArgsConstructor
 public class AdminDTO extends UsuarioDTO {
     public static Admin fromDtoToEntity(AdminDTO data) {
         return Admin.builder()

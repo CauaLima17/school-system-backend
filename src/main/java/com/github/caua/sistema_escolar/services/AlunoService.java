@@ -43,7 +43,10 @@ public class AlunoService {
 
     public void atualizarAluno(AlunoDTO data, Long id) {
         Aluno alunoBanco = alunoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi possível encontrar o aluno com esse ID"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Não foi possível encontrar o aluno com esse ID"
+                ));
 
         Aluno atualizacoesAluno = AlunoDTO.fromDtoToEntity(data);
 
@@ -53,7 +56,10 @@ public class AlunoService {
 
     public void deletarAluno(Long id) {
         Aluno alunoBanco = alunoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi possível encontrar o aluno com esse ID"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Não foi possível encontrar o aluno com esse ID"
+                ));
 
         alunoRepository.delete(alunoBanco);
     }
