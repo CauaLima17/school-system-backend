@@ -2,11 +2,15 @@ package com.github.caua.sistema_escolar.dtos;
 
 import com.github.caua.sistema_escolar.model.Turma;
 import com.github.caua.sistema_escolar.model.usuarios.Aluno;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class AlunoDTO extends UsuarioDTO {
     private Turma turma;
 
