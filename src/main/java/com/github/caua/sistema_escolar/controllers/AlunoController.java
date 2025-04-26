@@ -30,13 +30,13 @@ public class AlunoController {
     }
 
     @PatchMapping("/atualizar/{id}")
-    public ResponseEntity<String> listar(@RequestBody AlunoDTO data, @PathVariable Long id) {
+    public ResponseEntity<String> atualizar(@RequestBody AlunoDTO data, @PathVariable Long id) {
         alunoService.atualizarAluno(data, id);
         return ResponseEntity.ok("Aluno atualizado com sucesso");
     }
 
     @DeleteMapping("/remover/{id}")
-    public ResponseEntity<String> listar(@PathVariable Long id) {
+    public ResponseEntity<String> remover(@PathVariable Long id) {
         alunoService.deletarAluno(id);
         return ResponseEntity.ok("Aluno removido do sistema com sucesso");
     }

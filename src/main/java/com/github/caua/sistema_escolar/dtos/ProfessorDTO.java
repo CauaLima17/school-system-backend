@@ -3,13 +3,16 @@ package com.github.caua.sistema_escolar.dtos;
 import com.github.caua.sistema_escolar.model.Materia;
 import com.github.caua.sistema_escolar.model.usuarios.Aluno;
 import com.github.caua.sistema_escolar.model.usuarios.Professor;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 @Data
 @SuperBuilder
+@NoArgsConstructor
 public class ProfessorDTO extends UsuarioDTO {
     private List<Materia> materias;
 

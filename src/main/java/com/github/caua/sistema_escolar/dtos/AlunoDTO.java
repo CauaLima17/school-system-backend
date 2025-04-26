@@ -9,7 +9,6 @@ import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
-@AllArgsConstructor
 @NoArgsConstructor
 public class AlunoDTO extends UsuarioDTO {
     private Turma turma;

@@ -28,6 +28,14 @@ public class AlunoService {
     }
 
     public void registrarAluno(AlunoDTO data) {
+        alunoRepository.findByMatricula(data.getMatricula())
+                .ifPresent(aluno -> {
+                    throw new ResponseStatusException(
+                            HttpStatus.CONFLICT,
+                            "Já existe um aluno registrado com essa matrícula"
+                    );
+                });
+
         alunoRepository.save(
                 AlunoDTO.fromDtoToEntity(data)
         );
