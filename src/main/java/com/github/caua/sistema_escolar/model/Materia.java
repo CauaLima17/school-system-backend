@@ -22,6 +22,9 @@ public class Materia extends Entidade {
             joinColumns = @JoinColumn(name = "materia_id"),
             inverseJoinColumns = @JoinColumn(name = "professor_id")
     )
-    private List<Professor> professor;
+    private List<Professor> professores;
     private Integer cargaHoraria;
+
+    @ManyToMany(mappedBy = "materias")
+    private List<Curso> curso;
 }

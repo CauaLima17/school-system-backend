@@ -18,6 +18,6 @@ import java.util.List;
 @DiscriminatorValue("Professor")
 @SuperBuilder
 public class Professor extends Usuario {
-    @ManyToMany(mappedBy = "professor")
+    @ManyToMany(mappedBy = "professores")
     private List<Materia> materias;
 }
