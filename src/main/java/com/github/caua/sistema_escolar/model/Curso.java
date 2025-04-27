@@ -25,6 +25,4 @@ public class Curso extends Entidade {
             inverseJoinColumns = @JoinColumn(name = "materia_id")
     )
     private List<Materia> materias;
-    @OneToMany(mappedBy = "curso")
-    private List<Turma> turmas;
 }

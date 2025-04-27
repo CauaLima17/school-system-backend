@@ -24,7 +24,4 @@ public class Materia extends Entidade {
     )
     private List<Professor> professores;
     private Integer cargaHoraria;
-
-    @ManyToMany(mappedBy = "materias")
-    private List<Curso> curso;
 }

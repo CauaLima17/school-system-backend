@@ -24,7 +24,6 @@ public class CursoDTO {
                 .turno(data.getTurno())
                 .cargaHoraria(data.getCargaHoraria())
                 .materias(data.getMaterias())
-                .turmas(data.getTurmas())
                 .build();
     }
 
@@ -35,7 +34,6 @@ public class CursoDTO {
                 .turno(data.getTurno())
                 .cargaHoraria(data.getCargaHoraria())
                 .materias(data.getMaterias())
-                .turmas(data.getTurmas())
                 .build();
     }
 }

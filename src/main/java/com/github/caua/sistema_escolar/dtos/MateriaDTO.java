@@ -15,14 +15,12 @@ public class MateriaDTO {
     private String nome;
     private List<Professor> professores;
     private Integer cargaHoraria;
-    private List<Curso> curso;
 
     public static Materia fromDtoToEntity(MateriaDTO data) {
         return Materia.builder()
                 .nome(data.getNome())
                 .professores(data.getProfessores())
                 .cargaHoraria(data.getCargaHoraria())
-                .curso(data.getCurso())
                 .build();
     }
 
@@ -32,7 +30,6 @@ public class MateriaDTO {
                 .nome(data.getNome())
                 .professores(data.getProfessores())
                 .cargaHoraria(data.getCargaHoraria())
-                .curso(data.getCurso())
                 .build();
     }
 }

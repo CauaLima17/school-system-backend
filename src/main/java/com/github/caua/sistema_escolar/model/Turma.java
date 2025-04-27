@@ -19,7 +19,6 @@ public class Turma extends Entidade {
 
     @OneToMany(mappedBy = "turma")
     private List<Aluno> alunos;
-
     @ManyToOne
     private Curso curso;
 }
