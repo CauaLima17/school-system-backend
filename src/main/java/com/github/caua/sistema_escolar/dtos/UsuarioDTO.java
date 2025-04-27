@@ -15,4 +15,5 @@ public abstract class UsuarioDTO extends Entidade {
     private String matricula;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
+    private String tipo;
 }

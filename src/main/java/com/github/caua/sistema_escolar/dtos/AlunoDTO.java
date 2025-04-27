@@ -30,6 +30,7 @@ public class AlunoDTO extends UsuarioDTO {
                 .email(data.getEmail())
                 .matricula(data.getMatricula())
                 .turma(data.getTurma())
+                .tipo(data.getTipo())
                 .build();
     }
 }
