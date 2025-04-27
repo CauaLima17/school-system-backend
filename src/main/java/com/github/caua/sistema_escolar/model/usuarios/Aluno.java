@@ -9,6 +9,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Representa os alunos do sistema
+ *
+ * @author Cauã
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

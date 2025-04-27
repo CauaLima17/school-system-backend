@@ -29,4 +29,6 @@ public class Usuario extends Entidade {
     private String matricula;
     @Column(nullable = false)
     private String senha;
+    @Column(insertable = false, updatable = false)
+    private String tipo;
 }

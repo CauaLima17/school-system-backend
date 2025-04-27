@@ -6,6 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Representa os admins do sistema
+ *
+ * @author Cauã
+ */
 @Entity
 @NoArgsConstructor
 @Data

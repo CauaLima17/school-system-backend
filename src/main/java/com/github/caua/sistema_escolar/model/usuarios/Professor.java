@@ -11,6 +11,11 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
+/**
+ * Representa os professores do sistema
+ *
+ * @author Cauã
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
