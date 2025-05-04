@@ -15,22 +15,17 @@ import java.util.List;
 public class TurmaDTO {
     private Long id;
     private String anoPeriodo;
-    private List<Aluno> alunos;
+    private List<AlunoSimplesDTO> alunos;
     private Curso curso;
-
-    public static Turma fromDtoToEntity(TurmaDTO data) {
-        return Turma.builder()
-                .anoPeriodo(data.getAnoPeriodo())
-                .alunos(data.getAlunos())
-                .curso(data.getCurso())
-                .build();
-    }
 
     public static TurmaDTO fromEntityToDto(Turma data) {
         return TurmaDTO.builder()
                 .id(data.getId())
                 .anoPeriodo(data.getAnoPeriodo())
-                .alunos(data.getAlunos())
+                .alunos(data.getAlunos()
+                        .stream()
+                        .map(AlunoSimplesDTO::fromEntityToDto)
+                        .toList())
                 .curso(data.getCurso())
                 .build();
     }
