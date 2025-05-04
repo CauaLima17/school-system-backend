@@ -15,8 +15,10 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 public class Materia extends Entidade {
+    @Column(unique = true, nullable = false)
     private String nome;
     @ManyToMany(mappedBy = "materias")
     private List<Professor> professores;
+    @Column(nullable = false)
     private Integer cargaHoraria;
 }

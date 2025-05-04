@@ -12,4 +12,7 @@ import java.util.Optional;
 public interface ProfessorRepository extends JpaRepository<Professor, Long> {
     @Query("SELECT s FROM Usuario s WHERE TYPE(s) = Professor AND s.matricula = :matricula")
     Optional<Professor> findByMatricula(@Param("matricula") String matricula);
+
+    @Query("SELECT s FROM Usuario s WHERE TYPE(s) = Professor AND s.email = :email")
+    Optional<Professor> findByEmail(@Param("email") String email);
 }

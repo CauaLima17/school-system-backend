@@ -62,6 +62,13 @@ public class ProfessorService {
                             "Já existe um professor registrado com essa matrícula"
                     );
                 });
+        professorRepository.findByEmail(data.getEmail())
+                .ifPresent(professor -> {
+                    throw new ResponseStatusException(
+                            HttpStatus.CONFLICT,
+                            "Já existe um professor registrado com esse email"
+                    );
+                });
 
         Professor professor = fromDtoToEntity(data);
         professor.prePersist();
@@ -75,6 +82,24 @@ public class ProfessorService {
                         HttpStatus.NOT_FOUND,
                         "Não foi possível encontrar o professor com esse ID"
                 ));
+        professorRepository.findByMatricula(data.getMatricula())
+                .ifPresent(professor -> {
+                    if(!Objects.equals(professor.getId(), id)) {
+                        throw new ResponseStatusException(
+                                HttpStatus.CONFLICT,
+                                "Já existe um professor registrado com essa matrícula"
+                        );
+                    }
+                });
+        professorRepository.findByEmail(data.getEmail())
+                .ifPresent(professor -> {
+                    if(!Objects.equals(professor.getId(), id)) {
+                        throw new ResponseStatusException(
+                                HttpStatus.CONFLICT,
+                                "Já existe um professor registrado com esse email"
+                        );
+                    }
+                });
 
         Professor atualizacoesProfessor = fromDtoToEntity(data);
 
