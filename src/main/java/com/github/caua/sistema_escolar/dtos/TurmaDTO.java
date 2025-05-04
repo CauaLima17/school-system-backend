@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Builder
@@ -16,7 +17,7 @@ public class TurmaDTO {
     private Long id;
     private String anoPeriodo;
     private List<AlunoSimplesDTO> alunos;
-    private Curso curso;
+    private CursoDTO curso;
 
     public static TurmaDTO fromEntityToDto(Turma data) {
         return TurmaDTO.builder()
@@ -26,7 +27,9 @@ public class TurmaDTO {
                         .stream()
                         .map(AlunoSimplesDTO::fromEntityToDto)
                         .toList())
-                .curso(data.getCurso())
+                .curso(Objects.nonNull(data.getCurso())
+                        ? CursoDTO.fromEntityToDto(data.getCurso())
+                        : null)
                 .build();
     }
 }

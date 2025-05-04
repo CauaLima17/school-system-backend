@@ -1,8 +1,6 @@
 package com.github.caua.sistema_escolar.dtos;
 
 import com.github.caua.sistema_escolar.model.Curso;
-import com.github.caua.sistema_escolar.model.Materia;
-import com.github.caua.sistema_escolar.model.Turma;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,17 +13,7 @@ public class CursoDTO {
     private String nome;
     private String turno;
     private Long cargaHoraria;
-    private List<Materia> materias;
-    private List<Turma> turmas;
-
-    public static Curso fromDtoToEntity(CursoDTO data) {
-        return Curso.builder()
-                .nome(data.getNome())
-                .turno(data.getTurno())
-                .cargaHoraria(data.getCargaHoraria())
-                .materias(data.getMaterias())
-                .build();
-    }
+    private List<MateriaSimplesDTO> materias;
 
     public static CursoDTO fromEntityToDto(Curso data) {
         return CursoDTO.builder()
@@ -33,7 +21,10 @@ public class CursoDTO {
                 .nome(data.getNome())
                 .turno(data.getTurno())
                 .cargaHoraria(data.getCargaHoraria())
-                .materias(data.getMaterias())
+                .materias(data.getMaterias()
+                        .stream()
+                        .map(MateriaSimplesDTO::fromEntityToDto)
+                        .toList())
                 .build();
     }
 }

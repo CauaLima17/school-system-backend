@@ -2,6 +2,7 @@ package com.github.caua.sistema_escolar.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.caua.sistema_escolar.dtos.TurmaDTO;
+import com.github.caua.sistema_escolar.model.Curso;
 import com.github.caua.sistema_escolar.model.Materia;
 import com.github.caua.sistema_escolar.model.Turma;
 import com.github.caua.sistema_escolar.model.usuarios.Aluno;
@@ -41,7 +42,9 @@ public class TurmaService {
         return Turma.builder()
                 .anoPeriodo(data.getAnoPeriodo())
                 .alunos(alunos)
-                .curso(data.getCurso())
+                .curso(Objects.nonNull(data.getCurso())
+                        ? objectMapper.convertValue(data.getCurso(), Curso.class)
+                        : null)
                 .build();
     }
 
