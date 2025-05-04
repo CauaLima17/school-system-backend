@@ -16,12 +16,7 @@ import java.util.List;
 @SuperBuilder
 public class Materia extends Entidade {
     private String nome;
-    @ManyToMany
-    @JoinTable(
-            name = "materia_professores",
-            joinColumns = @JoinColumn(name = "materia_id"),
-            inverseJoinColumns = @JoinColumn(name = "professor_id")
-    )
+    @ManyToMany(mappedBy = "materias")
     private List<Professor> professores;
     private Integer cargaHoraria;
 }

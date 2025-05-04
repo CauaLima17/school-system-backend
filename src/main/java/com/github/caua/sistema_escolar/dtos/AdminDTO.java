@@ -24,6 +24,7 @@ public class AdminDTO extends UsuarioDTO {
                 .nome(data.getNome())
                 .email(data.getEmail())
                 .matricula(data.getMatricula())
+                .tipo(data.getTipo())
                 .build();
     }
 }

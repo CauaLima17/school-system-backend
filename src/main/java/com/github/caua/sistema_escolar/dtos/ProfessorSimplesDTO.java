@@ -5,26 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.util.List;
-
 @Data
-@SuperBuilder
 @NoArgsConstructor
-public class ProfessorDTO extends UsuarioDTO {
-    private List<MateriaSimplesDTO> materias;
+@SuperBuilder
+public class ProfessorSimplesDTO extends UsuarioDTO {
 
-    public static ProfessorDTO fromEntityToDto(Professor data) {
-        return ProfessorDTO.builder()
+    public static ProfessorSimplesDTO fromEntityToDto(Professor data) {
+        return ProfessorSimplesDTO.builder()
                 .id(data.getId())
                 .nome(data.getNome())
                 .email(data.getEmail())
                 .matricula(data.getMatricula())
-                .materias(
-                        data.getMaterias()
-                        .stream()
-                        .map(MateriaSimplesDTO::fromEntityToDto)
-                        .toList()
-                )
                 .tipo(data.getTipo())
                 .build();
     }
