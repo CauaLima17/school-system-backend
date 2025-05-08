@@ -3,9 +3,9 @@ package com.github.caua.sistema_escolar.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.caua.sistema_escolar.dtos.TurmaDTO;
 import com.github.caua.sistema_escolar.model.Curso;
-import com.github.caua.sistema_escolar.model.Materia;
 import com.github.caua.sistema_escolar.model.Turma;
 import com.github.caua.sistema_escolar.model.usuarios.Aluno;
+import com.github.caua.sistema_escolar.model.usuarios.Professor;
 import com.github.caua.sistema_escolar.repositories.TurmaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +31,19 @@ public class TurmaService {
 
     public Turma fromDtoToEntity(TurmaDTO data) {
         List<Aluno> alunos = null;
+        List<Professor> professores = null;
 
         if (!Objects.equals(data.getAlunos(), null)) {
             alunos = data.getAlunos()
                     .stream()
                     .map(aluno -> objectMapper.convertValue(aluno, Aluno.class))
+                    .collect(Collectors.toList());
+        }
+
+        if (!Objects.equals(data.getProfessores(), null)) {
+            professores = data.getProfessores()
+                    .stream()
+                    .map(professor -> objectMapper.convertValue(professor, Professor.class))
                     .collect(Collectors.toList());
         }
 
@@ -45,6 +53,7 @@ public class TurmaService {
                 .curso(Objects.nonNull(data.getCurso())
                         ? objectMapper.convertValue(data.getCurso(), Curso.class)
                         : null)
+                .professores(professores)
                 .build();
     }
 

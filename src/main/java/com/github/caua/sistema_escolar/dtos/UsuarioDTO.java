@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @NoArgsConstructor
-public abstract class UsuarioDTO {
+public class UsuarioDTO {
     private Long id;
     private String nome;
     private String email;

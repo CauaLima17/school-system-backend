@@ -1,10 +1,6 @@
 package com.github.caua.sistema_escolar.dtos;
 
-import com.github.caua.sistema_escolar.model.Curso;
 import com.github.caua.sistema_escolar.model.Turma;
-import com.github.caua.sistema_escolar.model.usuarios.Aluno;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Data;
 
@@ -17,7 +13,8 @@ public class TurmaDTO {
     private Long id;
     private String anoPeriodo;
     private List<AlunoSimplesDTO> alunos;
-    private CursoDTO curso;
+    private List<ProfessorDTO> professores;
+    private CursoSimplesDTO curso;
 
     public static TurmaDTO fromEntityToDto(Turma data) {
         return TurmaDTO.builder()
@@ -28,8 +25,12 @@ public class TurmaDTO {
                         .map(AlunoSimplesDTO::fromEntityToDto)
                         .toList())
                 .curso(Objects.nonNull(data.getCurso())
-                        ? CursoDTO.fromEntityToDto(data.getCurso())
+                        ? CursoSimplesDTO.fromEntityToDto(data.getCurso())
                         : null)
+                .professores(data.getProfessores()
+                        .stream()
+                        .map(ProfessorDTO::fromEntityToDto)
+                        .toList())
                 .build();
     }
 }
