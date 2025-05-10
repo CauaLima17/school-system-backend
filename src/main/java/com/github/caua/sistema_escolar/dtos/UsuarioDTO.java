@@ -9,11 +9,13 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @NoArgsConstructor
-public abstract class UsuarioDTO extends Entidade {
+public class UsuarioDTO {
+    private Long id;
     private String nome;
     private String email;
     private String matricula;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
     private String tipo;
+    private String token;
 }

@@ -1,9 +1,7 @@
 package com.github.caua.sistema_escolar.model.usuarios;
 
 import com.github.caua.sistema_escolar.model.Materia;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +21,11 @@ import java.util.List;
 @DiscriminatorValue("Professor")
 @SuperBuilder
 public class Professor extends Usuario {
-    @ManyToMany(mappedBy = "professores")
+    @ManyToMany
+    @JoinTable(
+            name = "materia_professores",
+            joinColumns = @JoinColumn(name = "professor_id"),
+            inverseJoinColumns = @JoinColumn(name = "materia_id")
+    )
     private List<Materia> materias;
 }

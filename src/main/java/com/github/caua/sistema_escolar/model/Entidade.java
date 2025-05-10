@@ -19,12 +19,18 @@ public abstract class Entidade implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(updatable = false)
     private LocalDateTime data_criacao;
     private LocalDateTime data_atualizacao;
     private LocalDateTime data_delete;
 
     @PrePersist
     public void prePersist() {
-        data_criacao = LocalDateTime.now();
+        if (data_criacao == null) data_criacao = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        data_atualizacao = LocalDateTime.now();
     }
 }

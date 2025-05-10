@@ -5,23 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.util.Objects;
-
 @Data
 @SuperBuilder
 @NoArgsConstructor
-public class AlunoDTO extends UsuarioDTO {
-    private TurmaSimplesDTO turma;
+public class AlunoSimplesDTO extends UsuarioDTO {
 
-    public static AlunoDTO fromEntityToDto(Aluno data) {
-        return AlunoDTO.builder()
+    public static AlunoSimplesDTO fromEntityToDto(Aluno data) {
+        return AlunoSimplesDTO.builder()
                 .id(data.getId())
                 .nome(data.getNome())
                 .email(data.getEmail())
                 .matricula(data.getMatricula())
-                .turma(Objects.nonNull(data.getTurma())
-                        ? TurmaSimplesDTO.fromEntityToDto(data.getTurma())
-                        : null)
                 .tipo(data.getTipo())
                 .build();
     }

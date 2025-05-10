@@ -12,4 +12,7 @@ import java.util.Optional;
 public interface AdminRepository extends JpaRepository<Admin, Long> {
     @Query("SELECT s FROM Usuario s WHERE TYPE(s) = Admin AND s.matricula = :matricula")
     Optional<Admin> findByMatricula(@Param("matricula") String matricula);
+
+    @Query("SELECT s FROM Usuario s WHERE TYPE(s) = Admin AND s.email = :email")
+    Optional<Admin> findByEmail(@Param("email") String email);
 }

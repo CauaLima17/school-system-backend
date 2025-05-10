@@ -1,6 +1,7 @@
 package com.github.caua.sistema_escolar.model;
 
 import com.github.caua.sistema_escolar.model.usuarios.Aluno;
+import com.github.caua.sistema_escolar.model.usuarios.Professor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,8 @@ public class Turma extends Entidade {
 
     @OneToMany(mappedBy = "turma")
     private List<Aluno> alunos;
-
     @ManyToOne
     private Curso curso;
+    @OneToMany
+    private List<Professor> professores;
 }

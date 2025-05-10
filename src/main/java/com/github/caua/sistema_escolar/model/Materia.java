@@ -15,16 +15,10 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 public class Materia extends Entidade {
+    @Column(unique = true, nullable = false)
     private String nome;
-    @ManyToMany
-    @JoinTable(
-            name = "materia_professores",
-            joinColumns = @JoinColumn(name = "materia_id"),
-            inverseJoinColumns = @JoinColumn(name = "professor_id")
-    )
-    private List<Professor> professores;
-    private Integer cargaHoraria;
-
     @ManyToMany(mappedBy = "materias")
-    private List<Curso> curso;
+    private List<Professor> professores;
+    @Column(nullable = false)
+    private Integer cargaHoraria;
 }

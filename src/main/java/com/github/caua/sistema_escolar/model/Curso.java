@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class Curso extends Entidade {
+    @Column(nullable = false, unique = true)
     private String nome;
     private String turno;
     private Long cargaHoraria;
@@ -24,6 +25,4 @@ public class Curso extends Entidade {
             inverseJoinColumns = @JoinColumn(name = "materia_id")
     )
     private List<Materia> materias;
-    @OneToMany(mappedBy = "curso")
-    private List<Turma> turmas;
 }

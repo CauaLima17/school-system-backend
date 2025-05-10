@@ -9,21 +9,13 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 public class AdminDTO extends UsuarioDTO {
-    public static Admin fromDtoToEntity(AdminDTO data) {
-        return Admin.builder()
-                .nome(data.getNome())
-                .email(data.getEmail())
-                .matricula(data.getMatricula())
-                .senha(data.getSenha())
-                .build();
-    }
-
     public static AdminDTO fromEntityToDto(Admin data) {
         return AdminDTO.builder()
                 .id(data.getId())
                 .nome(data.getNome())
                 .email(data.getEmail())
                 .matricula(data.getMatricula())
+                .tipo(data.getTipo())
                 .build();
     }
 }

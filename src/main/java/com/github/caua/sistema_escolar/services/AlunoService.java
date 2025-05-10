@@ -1,6 +1,8 @@
 package com.github.caua.sistema_escolar.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.caua.sistema_escolar.dtos.AlunoDTO;
+import com.github.caua.sistema_escolar.model.Turma;
 import com.github.caua.sistema_escolar.model.usuarios.Aluno;
 import com.github.caua.sistema_escolar.repositories.AlunoRepository;
 import org.springframework.beans.BeanUtils;
@@ -10,14 +12,32 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class AlunoService {
     private final AlunoRepository alunoRepository;
 
+    private final ObjectMapper objectMapper;
+
     @Autowired
-    public AlunoService(AlunoRepository alunoRepository) {
+    public AlunoService(AlunoRepository alunoRepository, ObjectMapper objectMapper) {
         this.alunoRepository = alunoRepository;
+        this.objectMapper = objectMapper;
+    }
+
+    public Aluno fromDtoToEntity(AlunoDTO data) {
+        Turma turma = Objects.nonNull(data.getTurma())
+                ? objectMapper.convertValue(data.getTurma(), Turma.class)
+                : null;
+
+        return Aluno.builder()
+                .nome(data.getNome())
+                .email(data.getEmail())
+                .matricula(data.getMatricula())
+                .turma(turma)
+                .senha(data.getSenha())
+                .build();
     }
 
     public List<AlunoDTO> listarAlunos() {
@@ -35,10 +55,18 @@ public class AlunoService {
                             "Já existe um aluno registrado com essa matrícula"
                     );
                 });
+        alunoRepository.findByEmail(data.getEmail())
+                .ifPresent(aluno -> {
+                    throw new ResponseStatusException(
+                            HttpStatus.CONFLICT,
+                            "Já existe um aluno registrado com esse email"
+                    );
+                });
 
-        alunoRepository.save(
-                AlunoDTO.fromDtoToEntity(data)
-        );
+        Aluno aluno = fromDtoToEntity(data);
+        aluno.prePersist();
+
+        alunoRepository.save(aluno);
     }
 
     public void atualizarAluno(AlunoDTO data, Long id) {
@@ -47,10 +75,30 @@ public class AlunoService {
                         HttpStatus.NOT_FOUND,
                         "Não foi possível encontrar o aluno com esse ID"
                 ));
+        alunoRepository.findByMatricula(data.getMatricula())
+                .ifPresent(aluno -> {
+                    if(!Objects.equals(aluno.getId(), id)) {
+                        throw new ResponseStatusException(
+                                HttpStatus.CONFLICT,
+                                "Já existe um aluno registrado com essa matrícula"
+                        );
+                    }
+                });
+        alunoRepository.findByEmail(data.getEmail())
+                .ifPresent(aluno -> {
+                    if(!Objects.equals(aluno.getId(), id)) {
+                        throw new ResponseStatusException(
+                                HttpStatus.CONFLICT,
+                                "Já existe um aluno registrado com esse email"
+                        );
+                    }
+                });
 
-        Aluno atualizacoesAluno = AlunoDTO.fromDtoToEntity(data);
+        Aluno atualizacoesAluno = fromDtoToEntity(data);
 
         BeanUtils.copyProperties(atualizacoesAluno, alunoBanco, "id");
+        alunoBanco.preUpdate();
+
         alunoRepository.save(alunoBanco);
     }
 
