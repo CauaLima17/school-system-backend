@@ -17,4 +17,5 @@ public class UsuarioDTO {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
     private String tipo;
+    private String token;
 }

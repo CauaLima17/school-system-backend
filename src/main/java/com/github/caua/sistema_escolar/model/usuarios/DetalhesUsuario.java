@@ -1,7 +1,5 @@
 package com.github.caua.sistema_escolar.model.usuarios;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -45,7 +43,7 @@ public class DetalhesUsuario extends Usuario implements UserDetails {
 
     @Override
     public String getPassword() {
-        return "";
+        return super.getSenha();
     }
 
     @Override

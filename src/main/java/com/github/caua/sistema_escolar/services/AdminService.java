@@ -6,6 +6,7 @@ import com.github.caua.sistema_escolar.repositories.AdminRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -15,10 +16,12 @@ import java.util.Objects;
 @Service
 public class AdminService {
     private final AdminRepository adminRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AdminService(AdminRepository adminRepository) {
+    public AdminService(AdminRepository adminRepository, PasswordEncoder passwordEncoder) {
         this.adminRepository = adminRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Admin fromDtoToEntity(AdminDTO data) {
@@ -53,6 +56,8 @@ public class AdminService {
                             "Já existe um professor registrado com esse email"
                     );
                 });
+
+        data.setSenha(passwordEncoder.encode(data.getSenha()));
 
         Admin admin = fromDtoToEntity(data);
         admin.prePersist();

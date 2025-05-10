@@ -2,37 +2,44 @@ package com.github.caua.sistema_escolar.services;
 
 import com.github.caua.sistema_escolar.dtos.UsuarioDTO;
 import com.github.caua.sistema_escolar.model.usuarios.DetalhesUsuario;
-import com.github.caua.sistema_escolar.model.usuarios.Usuario;
-import com.github.caua.sistema_escolar.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
-public class AuthService implements UserDetailsService {
-    private UsuarioRepository usuarioRepository;
+public class AuthService {
+    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public AuthService(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    public AuthService(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
     }
 
+    public UsuarioDTO login(UsuarioDTO usuario) {
+        try {
+            UsernamePasswordAuthenticationToken usernamePassword =
+                    new UsernamePasswordAuthenticationToken(usuario.getMatricula(), usuario.getSenha());
+            Authentication auth = authenticationManager.authenticate(usernamePassword);
+            DetalhesUsuario detalhesUsuario = (DetalhesUsuario) auth.getPrincipal();
 
-    @Override
-    public UserDetails loadUserByUsername(String matricula) throws UsernameNotFoundException {
-        Usuario usuario = usuarioRepository.findByMatricula(matricula)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
-
-        DetalhesUsuario detalhesUsuario = DetalhesUsuario.fromUsuarioToDetalhesUsuario(usuario);
-        return detalhesUsuario;
-    }
-
-    //TODO - Terminar a lógica de login e testar
-    public String login(UsuarioDTO usuario) {
-        return "";
+            return UsuarioDTO.builder()
+                    .id(detalhesUsuario.getId())
+                    .nome(detalhesUsuario.getNome())
+                    .email(detalhesUsuario.getEmail())
+                    .matricula(detalhesUsuario.getMatricula())
+                    .tipo(detalhesUsuario.getTipo())
+                    .token("TOKEN AQUI")
+                    .build();
+        } catch (AuthenticationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciais inválidas. Por favor, tente " +
+                    "novamente");
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Erro de validação desconhecido");
+        }
     }
 }
