@@ -8,6 +8,7 @@ import com.github.caua.sistema_escolar.repositories.ProfessorRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,10 +22,13 @@ public class ProfessorService {
 
     private final ObjectMapper objectMapper;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    public ProfessorService(ProfessorRepository professorRepository, ObjectMapper objectMapper) {
+    public ProfessorService(ProfessorRepository professorRepository, ObjectMapper objectMapper, PasswordEncoder passwordEncoder) {
         this.professorRepository = professorRepository;
         this.objectMapper = objectMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Professor fromDtoToEntity(ProfessorDTO data) {
@@ -69,6 +73,8 @@ public class ProfessorService {
                             "Já existe um professor registrado com esse email"
                     );
                 });
+
+        data.setSenha(passwordEncoder.encode(data.getSenha()));
 
         Professor professor = fromDtoToEntity(data);
         professor.prePersist();

@@ -30,15 +30,16 @@ public class DetalhesUsuario extends Usuario implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (super.getTipo().equals("Admin")) return List.of(
                 new SimpleGrantedAuthority("ROLE_ADMIN"),
-                new SimpleGrantedAuthority("ROLE_USER")
+                new SimpleGrantedAuthority("ROLE_PROFESSOR"),
+                new SimpleGrantedAuthority("ROLE_ALUNO")
         );
 
         else if (super.getTipo().equals("Professor")) return List.of(
                 new SimpleGrantedAuthority("ROLE_PROFESSOR"),
-                new SimpleGrantedAuthority("ROLE_USER")
+                new SimpleGrantedAuthority("ROLE_ALUNO")
         );
 
-        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_ALUNO"));
     }
 
     @Override

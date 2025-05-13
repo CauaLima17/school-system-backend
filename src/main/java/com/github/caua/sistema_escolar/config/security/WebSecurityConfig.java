@@ -1,6 +1,8 @@
 package com.github.caua.sistema_escolar.config.security;
 
 
+import com.github.caua.sistema_escolar.config.security.jwt.JwtTokenFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,14 +14,26 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class WebSecurityConfig {
+    private final JwtTokenFilter jwtTokenFilter;
+
+    @Autowired
+    public WebSecurityConfig(JwtTokenFilter jwtTokenFilter) {
+        this.jwtTokenFilter = jwtTokenFilter;
+    }
+
     private static final String[] AUTH_ROUTES = {
             "/usuario/**",
             "/detalhes/**"
+    };
+
+    private static final String[] PROFESSOR_ROUTES = {
+            "/aluno/boletim/**"
     };
 
     private static final String[] WHITELIST = {
@@ -35,6 +49,7 @@ public class WebSecurityConfig {
                 );
 
         autorizarRotas(httpSecurity);
+        httpSecurity.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }
@@ -46,9 +61,11 @@ public class WebSecurityConfig {
 
     public void autorizarRotas(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(HttpMethod.POST, AUTH_ROUTES).hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, AUTH_ROUTES).hasRole("ALUNO")
+                .requestMatchers(PROFESSOR_ROUTES).hasRole("PROFESSOR")
+                .requestMatchers(AUTH_ROUTES).hasRole("ADMIN")
                 .requestMatchers(WHITELIST).permitAll()
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
         );
     }
 }

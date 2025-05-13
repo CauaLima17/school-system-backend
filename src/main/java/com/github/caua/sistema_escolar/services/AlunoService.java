@@ -8,6 +8,7 @@ import com.github.caua.sistema_escolar.repositories.AlunoRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,10 +21,13 @@ public class AlunoService {
 
     private final ObjectMapper objectMapper;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    public AlunoService(AlunoRepository alunoRepository, ObjectMapper objectMapper) {
+    public AlunoService(AlunoRepository alunoRepository, ObjectMapper objectMapper, PasswordEncoder passwordEncoder) {
         this.alunoRepository = alunoRepository;
         this.objectMapper = objectMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Aluno fromDtoToEntity(AlunoDTO data) {
@@ -62,6 +66,8 @@ public class AlunoService {
                             "Já existe um aluno registrado com esse email"
                     );
                 });
+
+        data.setSenha(passwordEncoder.encode(data.getSenha()));
 
         Aluno aluno = fromDtoToEntity(data);
         aluno.prePersist();
