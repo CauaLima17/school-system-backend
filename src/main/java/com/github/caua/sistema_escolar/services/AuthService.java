@@ -44,7 +44,7 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciais inválidas. Por favor, tente " +
                     "novamente");
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Erro de validação desconhecido");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Erro de autenticação desconhecido");
         }
     }
 }
