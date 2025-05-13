@@ -31,4 +31,6 @@ public class Usuario extends Entidade {
     private String senha;
     @Column(insertable = false, updatable = false)
     private String tipo;
+
+
 }

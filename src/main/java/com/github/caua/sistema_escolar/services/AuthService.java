@@ -1,5 +1,6 @@
 package com.github.caua.sistema_escolar.services;
 
+import com.github.caua.sistema_escolar.config.security.jwt.JwtTokenProvider;
 import com.github.caua.sistema_escolar.dtos.UsuarioDTO;
 import com.github.caua.sistema_escolar.model.usuarios.DetalhesUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,12 @@ import org.springframework.web.server.ResponseStatusException;
 public class AuthService {
     private final AuthenticationManager authenticationManager;
 
+    private final JwtTokenProvider jwtTokenProvider;
+
     @Autowired
-    public AuthService(AuthenticationManager authenticationManager) {
+    public AuthService(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     public UsuarioDTO login(UsuarioDTO usuario) {
@@ -33,8 +37,9 @@ public class AuthService {
                     .email(detalhesUsuario.getEmail())
                     .matricula(detalhesUsuario.getMatricula())
                     .tipo(detalhesUsuario.getTipo())
-                    .token("TOKEN AQUI")
+                    .token(jwtTokenProvider.generateToken(detalhesUsuario))
                     .build();
+
         } catch (AuthenticationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciais inválidas. Por favor, tente " +
                     "novamente");
