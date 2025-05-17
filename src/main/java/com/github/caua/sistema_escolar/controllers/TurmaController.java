@@ -4,10 +4,12 @@ import com.github.caua.sistema_escolar.dtos.TurmaDTO;
 import com.github.caua.sistema_escolar.services.TurmaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@PreAuthorize("hasRole('ADMIN')")
 @RestController
 @RequestMapping("/detalhes/turma")
 public class TurmaController {
@@ -18,6 +20,7 @@ public class TurmaController {
         this.turmaService = turmaService;
     }
 
+    @PreAuthorize("hasRole('PROFESSOR') || hasRole('ALUNO')")
     @GetMapping("/listar")
     public ResponseEntity<List<TurmaDTO>> listar() {
         return ResponseEntity.ok(turmaService.listarTurmas());

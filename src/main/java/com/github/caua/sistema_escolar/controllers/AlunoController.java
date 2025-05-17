@@ -4,10 +4,12 @@ import com.github.caua.sistema_escolar.dtos.AlunoDTO;
 import com.github.caua.sistema_escolar.services.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@PreAuthorize("hasRole('ADMIN')")
 @RestController
 @RequestMapping("/usuario/aluno")
 public class AlunoController {
@@ -18,6 +20,7 @@ public class AlunoController {
         this.alunoService = alunoService;
     }
 
+    @PreAuthorize("hasRole('PROFESSOR') || hasRole('ALUNO')")
     @GetMapping("/listar")
     public ResponseEntity<List<AlunoDTO>> listar() {
         return ResponseEntity.ok(alunoService.listarAlunos());

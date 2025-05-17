@@ -4,10 +4,12 @@ import com.github.caua.sistema_escolar.dtos.MateriaDTO;
 import com.github.caua.sistema_escolar.services.MateriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@PreAuthorize("hasRole('ADMIN')")
 @RestController
 @RequestMapping("/detalhes/materia")
 public class MateriaController {
@@ -18,6 +20,7 @@ public class MateriaController {
         this.materiaService = materiaService;
     }
 
+    @PreAuthorize("hasRole('PROFESSOR') || hasRole('ALUNO')")
     @GetMapping("/listar")
     public ResponseEntity<List<MateriaDTO>> listar() {
         return ResponseEntity.ok(materiaService.listarMaterias());
