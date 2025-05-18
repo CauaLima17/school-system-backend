@@ -4,10 +4,12 @@ import com.github.caua.sistema_escolar.dtos.AdminDTO;
 import com.github.caua.sistema_escolar.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@PreAuthorize("hasRole('ADMIN')")
 @RestController
 @RequestMapping("/usuario/admin")
 public class AdminController {

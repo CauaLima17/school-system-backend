@@ -4,10 +4,12 @@ import com.github.caua.sistema_escolar.dtos.ProfessorDTO;
 import com.github.caua.sistema_escolar.services.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@PreAuthorize("hasRole('ADMIN')")
 @RestController
 @RequestMapping("/usuario/professor")
 public class ProfessorController {
@@ -19,6 +21,7 @@ public class ProfessorController {
         this.professorService = professorService;
     }
 
+    @PreAuthorize("hasRole('PROFESSOR') || hasRole('ALUNO')")
     @GetMapping("/listar")
     public ResponseEntity<List<ProfessorDTO>> listar() {
         return ResponseEntity.ok(professorService.listarProfessores());

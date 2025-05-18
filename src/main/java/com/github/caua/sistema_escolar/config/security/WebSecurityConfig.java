@@ -29,10 +29,7 @@ public class WebSecurityConfig {
 
     private static final String[] AUTH_ROUTES = {
             "/usuario/**",
-            "/detalhes/**"
-    };
-
-    private static final String[] PROFESSOR_ROUTES = {
+            "/detalhes/**",
             "/aluno/boletim/**"
     };
 
@@ -61,9 +58,7 @@ public class WebSecurityConfig {
 
     public void autorizarRotas(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(HttpMethod.GET, AUTH_ROUTES).hasRole("ALUNO")
-                .requestMatchers(PROFESSOR_ROUTES).hasRole("PROFESSOR")
-                .requestMatchers(AUTH_ROUTES).hasRole("ADMIN")
+                .requestMatchers(AUTH_ROUTES).authenticated()
                 .requestMatchers(WHITELIST).permitAll()
                 .anyRequest().authenticated()
         );
