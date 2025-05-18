@@ -1,11 +1,6 @@
 package com.github.caua.sistema_escolar.dtos;
 
-import com.github.caua.sistema_escolar.model.Boletim;
 import com.github.caua.sistema_escolar.model.DiarioClasse;
-import com.github.caua.sistema_escolar.model.Materia;
-import com.github.caua.sistema_escolar.model.Turma;
-import com.github.caua.sistema_escolar.model.usuarios.Professor;
-import jakarta.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Data;
 

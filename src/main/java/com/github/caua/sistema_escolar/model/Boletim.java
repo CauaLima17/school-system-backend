@@ -14,7 +14,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Boletim extends Entidade {
     private String bimestre;
-    private Double nota;
+    @Builder.Default
+    private Double nota = 0.0;
     private Long quantidadeFaltas;
     @ManyToOne
     private Materia materia;
